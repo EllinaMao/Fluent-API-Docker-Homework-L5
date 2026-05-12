@@ -68,7 +68,7 @@ namespace Fluent_API
 
             modelBuilder.Entity<Student>().Property(u => u.Age).HasDefaultValue(18);
             modelBuilder.Entity<Student>()
-            .ToTable(t => t.HasCheckConstraint("Age", "Age > 0 AND Age < 120"));
+            .ToTable(t => t.HasCheckConstraint("CK_Student_Age", "Age > 0 AND Age < 120"));
 
             // Исключение сопоставления для свойства
             modelBuilder.Entity<Student>().Ignore(p => p.Address);
@@ -95,7 +95,7 @@ namespace Fluent_API
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=DESKTOP-G30VB0K\MSSQLSERVER01;Database=FluentAPI;Integrated Security=SSPI;TrustServerCertificate=true");
+            optionsBuilder.UseNpgsql(@"Host=pg_fluent;Port=5432;Database=Students_Step;Username=ellina;Password=secret_lesson_pass");
 
         }
     }

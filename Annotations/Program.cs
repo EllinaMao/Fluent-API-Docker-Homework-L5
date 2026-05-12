@@ -75,7 +75,7 @@ namespace Annotations
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=DESKTOP-G30VB0K\MSSQLSERVER01;Database=Annotations;Integrated Security=SSPI;TrustServerCertificate=true");
+            optionsBuilder.UseNpgsql(@"Host=pg_anno;Port=5432;Database=Students_postgres;Username=ellina;Password=secret_lesson_pass");
         }
     }
 }

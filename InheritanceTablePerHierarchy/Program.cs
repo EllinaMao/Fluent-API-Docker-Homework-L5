@@ -70,7 +70,7 @@ namespace InheritanceTablePerHierarchy
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=DESKTOP-G30VB0K\MSSQLSERVER01;Database=Students;Integrated Security=SSPI;TrustServerCertificate=true");
+            optionsBuilder.UseNpgsql(@"Host=pg_inheritance_hierarchy;Port=5432;Database=Students_Step;Username=ellina;Password=secret_lesson_pass");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

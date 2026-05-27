@@ -1,6 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
-
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System;
+using Microsoft.Extensions.Configuration;
+using System.IO;
 namespace InheritanceTablePerClass
 {
     // Начиная с версии EF Core 7.0 во фреймворк была добавлена поддержка нового подхода к
@@ -79,10 +82,15 @@ namespace InheritanceTablePerClass
             optionsBuilder.UseNpgsql(@"Host=pg_inheritance;Port=5432;Database=Students_Step;Username=ellina;Password=secret_lesson_pass");
 
         }
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            // Начиная с версии EF Core 7.0 также можно вызвать метод UseTpcMappingStrategy для базовой сущности иерархии
-            modelBuilder.Entity<Person>().UseTpcMappingStrategy();  // Используем стратегию TPC
+            var builder = new ConfigurationBuilder();
+            builder.SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json");
+
+            var configuration = builder.Build();
+            var connectionString = configuration.GetConnectionString("DefaultConnection");
+            optionsBuilder.UseNpgsql(connectionString);
         }
     }
 

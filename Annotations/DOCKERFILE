@@ -1,0 +1,18 @@
+FROM mcr.microsoft.com/dotnet/sdk:7.0-alpine AS build
+WORKDIR /dotnet
+COPY ["Fluent API.sln", "./"]
+COPY Annotations/Annotations.csproj Annotations/
+RUN dotnet restore Annotations/Annotations.csproj
+
+
+COPY . .
+WORKDIR /dotnet/Annotations
+RUN dotnet publish Annotations.csproj -c Release -o /app/publish /p:UseAppHost=false
+
+
+FROM mcr.microsoft.com/dotnet/runtime:7.0-alpine AS release
+WORKDIR /app
+ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
+COPY --from=build /app/publish .
+
+CMD ["dotnet", "Annotations.dll"]

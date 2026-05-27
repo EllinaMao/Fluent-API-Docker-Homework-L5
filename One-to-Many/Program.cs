@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.IO;
 
 namespace One_to_Many
 {
@@ -93,9 +95,14 @@ namespace One_to_Many
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(@"Host=pg_otm;Port=5432;Database=Students_Step;Username=ellina;Password=secret_lesson_pass");
-        }
+            var builder = new ConfigurationBuilder();
+            builder.SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json");
 
+            var configuration = builder.Build();
+            var connectionString = configuration.GetConnectionString("DefaultConnection");
+            optionsBuilder.UseNpgsql(connectionString);
+        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Установим связь Один ко Многим между объектом AcademyGroup и объектами Student 

@@ -1,5 +1,7 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using System;
+using System.IO;
 
 namespace InheritanceTablePerHierarchy
 {
@@ -70,7 +72,13 @@ namespace InheritanceTablePerHierarchy
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(@"Host=pg_inheritance_hierarchy;Port=5432;Database=Students_Step;Username=ellina;Password=secret_lesson_pass");
+            var builder = new ConfigurationBuilder();
+            builder.SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json");
+
+            var configuration = builder.Build();
+            var connectionString = configuration.GetConnectionString("DefaultConnection");
+            optionsBuilder.UseNpgsql(connectionString);
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

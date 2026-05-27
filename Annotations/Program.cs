@@ -2,6 +2,8 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace Annotations
 {
@@ -75,7 +77,13 @@ namespace Annotations
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(@"Host=pg_anno;Port=5432;Database=Students_postgres;Username=ellina;Password=secret_lesson_pass");
+            var builder = new ConfigurationBuilder();
+            builder.SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json");
+
+            var configuration = builder.Build();
+            var connectionString = configuration.GetConnectionString("DefaultConnection");
+            optionsBuilder.UseNpgsql(connectionString);
         }
     }
 }

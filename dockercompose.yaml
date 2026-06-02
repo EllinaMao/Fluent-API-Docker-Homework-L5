@@ -23,11 +23,11 @@ services:
     depends_on:
       - postgres_db
 
-  InheritanceTablePerClass:
+  inheritance-table-per-class:
     build: 
       context: .
       dockerfile: InheritanceTablePerClass/DOCKERFILE
-    container_name: InheritanceTablePerClass-fluent-api
+    container_name: inheritance-table-per-class-fluent-api
     volumes:
       - ./InheritanceTablePerClass/appsettings.json:/app/appsettings.json:ro
     networks:
@@ -35,11 +35,11 @@ services:
     depends_on:
       - postgres_db
 
-  InheritanceTablePerHierarchy:
+  inheritance-table-per-hierarchy:
     build: 
       context: .
       dockerfile: InheritanceTablePerHierarchy/DOCKERFILE
-    container_name: InheritanceTablePerHierarchy-fluent-api
+    container_name: inheritance-table-per-hierarchy-fluent-api
     volumes:
       - ./InheritanceTablePerHierarchy/appsettings.json:/app/appsettings.json:ro
     networks:
@@ -47,11 +47,11 @@ services:
     depends_on:
       - postgres_db
 
-  InheritanceTablePerType:
+  inheritance-table-per-type:
     build: 
       context: .
       dockerfile: InheritanceTablePerType/DOCKERFILE
-    container_name: InheritanceTablePerType-fluent-api
+    container_name: inheritance-table-per-type-fluent-api
     volumes:
       - ./InheritanceTablePerType/appsettings.json:/app/appsettings.json:ro
     networks:
@@ -59,11 +59,11 @@ services:
     depends_on:
       - postgres_db
 
-  Many-to-many:
+  many-to-many:
     build: 
       context: .
       dockerfile: Many-to-many/DOCKERFILE
-    container_name: Many-to-many-fluent-api
+    container_name: many-to-many-fluent-api
     volumes:
       - ./Many-to-many/appsettings.json:/app/appsettings.json:ro
     networks:
@@ -72,11 +72,11 @@ services:
       - postgres_db
 
 
-  One-to-Many:
+  one-to-many:
     build: 
       context: .
       dockerfile: One-to-Many/DOCKERFILE
-    container_name: One-to-Many-fluent-api
+    container_name: one-to-many-fluent-api
     volumes:
       - ./One-to-Many/appsettings.json:/app/appsettings.json:ro
     networks:

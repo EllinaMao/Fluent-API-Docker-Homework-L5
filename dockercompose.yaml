@@ -1,0 +1,113 @@
+
+
+services:
+
+  annotation-fluent-api:
+    build: 
+      dockerfile: Dockerfile
+      context: .
+    container_name: annotation-fluent-api
+    volumes:
+      - ./Annotations/appsettings.json:/app/appsettings.json:ro
+    networks:
+      - my-bd-network
+    depends_on:
+      - postgres_db
+
+  fluent-api-fluent-api:
+    build: 
+      dockerfile: Dockerfile
+      context: .
+    container_name: fluent-api-fluent-api
+    volumes:
+      - ./Fluent API/appsettings.json:/app/appsettings.json:ro
+    networks:
+      - my-bd-network
+    depends_on:
+      - postgres_db
+
+  InheritanceTablePerClass:
+    build: 
+      dockerfile: Dockerfile
+      context: .
+    container_name: InheritanceTablePerClass-fluent-api
+    volumes:
+      - ./InheritanceTablePerClass/appsettings.json:/app/appsettings.json:ro
+    networks:
+      - my-bd-network
+    depends_on:
+      - postgres_db
+
+  InheritanceTablePerHierarchy:
+    build: 
+      dockerfile: Dockerfile
+      context: .
+    container_name: InheritanceTablePerHierarchy-fluent-api
+    volumes:
+      - ./InheritanceTablePerHierarchy/appsettings.json:/app/appsettings.json:ro
+    networks:
+      - my-bd-network
+    depends_on:
+      - postgres_db
+
+  InheritanceTablePerType:
+    build: 
+      dockerfile: Dockerfile
+      context: .
+    container_name: InheritanceTablePerType-fluent-api
+    volumes:
+      - ./InheritanceTablePerType/appsettings.json:/app/appsettings.json:ro
+    networks:
+      - my-bd-network
+    depends_on:
+      - postgres_db
+
+  Many-to-many:
+    build: 
+      dockerfile: Dockerfile
+      context: .
+    container_name: Many-to-many-fluent-api
+    volumes:
+      - ./Many-to-many/appsettings.json:/app/appsettings.json:ro
+    networks:
+      - my-bd-network
+    depends_on:
+      - postgres_db
+
+
+  One-to-Many:
+  build: 
+    dockerfile: Dockerfile
+    context: .
+  container_name: One-to-Many-fluent-api
+  volumes:
+    - ./One-to-Many/appsettings.json:/app/appsettings.json:ro
+  networks:
+    - my-bd-network
+  depends_on:
+    - postgres_db
+
+  postgres_db:
+    image: postgres:15-alpine
+    container_name: postgres_db
+    
+    environment:
+      POSTGRES_DB: Students_postgres Fluent_API 
+      POSTGRES_USER: ellina
+      POSTGRES_PASSWORD: secret_lesson_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - my-bd-network
+      
+    
+    
+networks:
+  my-bd-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+    driver: volume

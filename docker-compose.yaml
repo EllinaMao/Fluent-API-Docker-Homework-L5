@@ -9,7 +9,8 @@ services:
     networks:
       - my-bd-network
     depends_on:
-      - postgres_db
+      - postgres_db:
+        condition: service_healthy
 
   fluent-api-fluent-api:
     build: 
@@ -21,7 +22,8 @@ services:
     networks:
       - my-bd-network
     depends_on:
-      - postgres_db
+      - postgres_db:
+        condition: service_healthy
 
   inheritance-table-per-class:
     build: 
@@ -33,7 +35,8 @@ services:
     networks:
       - my-bd-network
     depends_on:
-      - postgres_db
+      - postgres_db:
+        condition: service_healthy
 
   inheritance-table-per-hierarchy:
     build: 
@@ -45,7 +48,8 @@ services:
     networks:
       - my-bd-network
     depends_on:
-      - postgres_db
+      - postgres_db:
+        condition: service_healthy
 
   inheritance-table-per-type:
     build: 
@@ -57,7 +61,8 @@ services:
     networks:
       - my-bd-network
     depends_on:
-      - postgres_db
+      - postgres_db:
+        condition: service_healthy
 
   many-to-many:
     build: 
@@ -69,7 +74,8 @@ services:
     networks:
       - my-bd-network
     depends_on:
-      - postgres_db
+      - postgres_db:
+        condition: service_healthy
 
 
   one-to-many:
@@ -82,23 +88,34 @@ services:
     networks:
       - my-bd-network
     depends_on:
-      - postgres_db
+      - postgres_db:
+        condition: service_healthy
 
   postgres_db:
     image: postgres:15-alpine
     container_name: postgres_db
-    
-    environment:
-      # POSTGRES_DB: appsettings.json will connect them
-      POSTGRES_USER: ellina
-      POSTGRES_PASSWORD: secret_lesson_pass
-    ports:
-      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER_FILE=/run/secrets/psql_user
+      - POSTGRES_DB_FILE=/run/secrets/psql_dbname
+      - POSTGRES_PASSWORD_FILE=/run/secrets/psql_pass
+
+    secrets:
+      - psql_user
+      - psql_dbname
+      - psql_pass
+
+    ports:
+      - "5432:5432"
     networks:
       - my-bd-network
-      
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ellina -d postgres"]
+      interval: 10s      
+      timeout: 5s
+      retries: 5
+      start_period: 10s
     
     
 networks:
@@ -107,4 +124,12 @@ networks:
 
 volumes:
   postgres_data:
+
+secrets:
+  psql_user:
+    file: ./secrets/psql_user.txt
+  psql_dbname:
+    file: ./secrets/psql_dbname.txt
+  psql_pass:
+    file: ./secrets/psql_pass.txt
  

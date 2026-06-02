@@ -69,8 +69,10 @@ namespace Fluent_API
             modelBuilder.Entity<Student>().Property(p => p.LastName).HasColumnName("StudentSurname");
 
             modelBuilder.Entity<Student>().Property(u => u.Age).HasDefaultValue(18);
+            //modelBuilder.Entity<Student>()
+            //.ToTable(t => t.HasCheckConstraint("CK_Student_Age", "Age > 0 AND Age < 120"));
             modelBuilder.Entity<Student>()
-            .ToTable(t => t.HasCheckConstraint("CK_Student_Age", "Age > 0 AND Age < 120"));
+            .ToTable(t => t.HasCheckConstraint("CK_Student_Age", "\"Age\" > 0 AND \"Age\" < 120"));
 
             // Исключение сопоставления для свойства
             modelBuilder.Entity<Student>().Ignore(p => p.Address);

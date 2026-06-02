@@ -9,7 +9,7 @@ services:
     networks:
       - my-bd-network
     depends_on:
-      - postgres_db:
+      postgres_db:
         condition: service_healthy
 
   fluent-api-fluent-api:
@@ -22,7 +22,7 @@ services:
     networks:
       - my-bd-network
     depends_on:
-      - postgres_db:
+      postgres_db:
         condition: service_healthy
 
   inheritance-table-per-class:
@@ -35,7 +35,7 @@ services:
     networks:
       - my-bd-network
     depends_on:
-      - postgres_db:
+      postgres_db:
         condition: service_healthy
 
   inheritance-table-per-hierarchy:
@@ -48,7 +48,7 @@ services:
     networks:
       - my-bd-network
     depends_on:
-      - postgres_db:
+      postgres_db:
         condition: service_healthy
 
   inheritance-table-per-type:
@@ -61,7 +61,7 @@ services:
     networks:
       - my-bd-network
     depends_on:
-      - postgres_db:
+      postgres_db:
         condition: service_healthy
 
   many-to-many:
@@ -74,9 +74,8 @@ services:
     networks:
       - my-bd-network
     depends_on:
-      - postgres_db:
+      postgres_db:
         condition: service_healthy
-
 
   one-to-many:
     build: 
@@ -88,7 +87,7 @@ services:
     networks:
       - my-bd-network
     depends_on:
-      - postgres_db:
+      postgres_db:
         condition: service_healthy
 
   postgres_db:

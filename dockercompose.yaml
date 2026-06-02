@@ -1,5 +1,4 @@
 services:
-
   annotation-fluent-api:
     build: 
       context: .

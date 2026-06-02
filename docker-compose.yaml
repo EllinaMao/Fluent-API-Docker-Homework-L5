@@ -107,4 +107,4 @@ networks:
 
 volumes:
   postgres_data:
-    driver: volume
+ 

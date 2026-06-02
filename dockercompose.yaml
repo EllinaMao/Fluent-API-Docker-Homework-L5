@@ -76,23 +76,23 @@ services:
 
 
   One-to-Many:
-  build: 
-    dockerfile: Dockerfile
-    context: .
-  container_name: One-to-Many-fluent-api
-  volumes:
-    - ./One-to-Many/appsettings.json:/app/appsettings.json:ro
-  networks:
-    - my-bd-network
-  depends_on:
-    - postgres_db
+    build: 
+      dockerfile: Dockerfile
+      context: .
+    container_name: One-to-Many-fluent-api
+    volumes:
+      - ./One-to-Many/appsettings.json:/app/appsettings.json:ro
+    networks:
+      - my-bd-network
+    depends_on:
+      - postgres_db
 
   postgres_db:
     image: postgres:15-alpine
     container_name: postgres_db
     
     environment:
-      POSTGRES_DB: Students_postgres Fluent_API 
+      # POSTGRES_DB: appsettings.json will connect them
       POSTGRES_USER: ellina
       POSTGRES_PASSWORD: secret_lesson_pass
     ports:

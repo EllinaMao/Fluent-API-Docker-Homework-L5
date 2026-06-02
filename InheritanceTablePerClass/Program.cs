@@ -77,11 +77,7 @@ namespace InheritanceTablePerClass
             Database.EnsureDeleted();
             Database.EnsureCreated();
         }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseNpgsql(@"Host=pg_inheritance;Port=5432;Database=Students_Step;Username=ellina;Password=secret_lesson_pass");
 
-        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             var builder = new ConfigurationBuilder();

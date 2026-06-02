@@ -1,0 +1,18 @@
+FROM mcr.microsoft.com/dotnet/sdk:7.0-alpine AS build
+WORKDIR /dotnet
+COPY ["Fluent API.sln", "./"]
+COPY 'InheritanceTablePerType'/'InheritanceTablePerType.csproj' 'InheritanceTablePerType'/
+RUN dotnet restore 'InheritanceTablePerType'/'InheritanceTablePerType.csproj'
+
+
+COPY . .
+WORKDIR /dotnet/'InheritanceTablePerType'
+RUN dotnet publish 'InheritanceTablePerType.csproj' -c Release -o /app/publish /p:UseAppHost=false
+
+
+FROM mcr.microsoft.com/dotnet/runtime:7.0-alpine AS release
+WORKDIR /app
+ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
+COPY --from=build /app/publish .
+
+CMD ["dotnet", "InheritanceTablePerType.dll"]

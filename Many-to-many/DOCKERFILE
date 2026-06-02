@@ -1,0 +1,18 @@
+FROM mcr.microsoft.com/dotnet/sdk:7.0-alpine AS build
+WORKDIR /dotnet
+COPY ["Fluent API.sln", "./"]
+COPY 'Many-to-many'/'Many-to-many.csproj' 'Many-to-many'/
+RUN dotnet restore 'Many-to-many'/'Many-to-many.csproj'
+
+
+COPY . .
+WORKDIR /dotnet/'Many-to-many'
+RUN dotnet publish 'Many-to-many.csproj' -c Release -o /app/publish /p:UseAppHost=false
+
+
+FROM mcr.microsoft.com/dotnet/runtime:7.0-alpine AS release
+WORKDIR /app
+ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
+COPY --from=build /app/publish .
+
+CMD ["dotnet", "Many-to-many.dll"]

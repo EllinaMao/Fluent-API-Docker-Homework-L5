@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:7.0-alpine AS build
 WORKDIR /dotnet
 COPY ["Fluent API.sln", "./"]
-COPY "Fluent API"/"Fluent API.csproj" "Fluent API/"
+COPY "Fluent API/Fluent API.csproj" "Fluent API/"
 RUN dotnet restore "Fluent API/Fluent API.csproj"
 
 

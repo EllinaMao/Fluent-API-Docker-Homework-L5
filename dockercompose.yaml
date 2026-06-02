@@ -1,11 +1,9 @@
-
-
 services:
 
   annotation-fluent-api:
     build: 
-      dockerfile: Dockerfile
       context: .
+      dockerfile: Annotations/DOCKERFILE
     container_name: annotation-fluent-api
     volumes:
       - ./Annotations/appsettings.json:/app/appsettings.json:ro
@@ -16,8 +14,8 @@ services:
 
   fluent-api-fluent-api:
     build: 
-      dockerfile: Dockerfile
       context: .
+      dockerfile: "Fluent API/DOCKERFILE"
     container_name: fluent-api-fluent-api
     volumes:
       - ./Fluent API/appsettings.json:/app/appsettings.json:ro
@@ -28,8 +26,8 @@ services:
 
   InheritanceTablePerClass:
     build: 
-      dockerfile: Dockerfile
       context: .
+      dockerfile: InheritanceTablePerClass/DOCKERFILE
     container_name: InheritanceTablePerClass-fluent-api
     volumes:
       - ./InheritanceTablePerClass/appsettings.json:/app/appsettings.json:ro
@@ -40,8 +38,8 @@ services:
 
   InheritanceTablePerHierarchy:
     build: 
-      dockerfile: Dockerfile
       context: .
+      dockerfile: InheritanceTablePerHierarchy/DOCKERFILE
     container_name: InheritanceTablePerHierarchy-fluent-api
     volumes:
       - ./InheritanceTablePerHierarchy/appsettings.json:/app/appsettings.json:ro
@@ -52,8 +50,8 @@ services:
 
   InheritanceTablePerType:
     build: 
-      dockerfile: Dockerfile
       context: .
+      dockerfile: InheritanceTablePerType/DOCKERFILE
     container_name: InheritanceTablePerType-fluent-api
     volumes:
       - ./InheritanceTablePerType/appsettings.json:/app/appsettings.json:ro
@@ -64,8 +62,8 @@ services:
 
   Many-to-many:
     build: 
-      dockerfile: Dockerfile
       context: .
+      dockerfile: Many-to-many/DOCKERFILE
     container_name: Many-to-many-fluent-api
     volumes:
       - ./Many-to-many/appsettings.json:/app/appsettings.json:ro
@@ -77,8 +75,8 @@ services:
 
   One-to-Many:
     build: 
-      dockerfile: Dockerfile
       context: .
+      dockerfile: One-to-Many/DOCKERFILE
     container_name: One-to-Many-fluent-api
     volumes:
       - ./One-to-Many/appsettings.json:/app/appsettings.json:ro
